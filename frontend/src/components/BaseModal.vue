@@ -1,10 +1,13 @@
 <template>
   <teleport to="body">
-    <div class="overlay" @mousedown="onOverlayMouseDown" v-show="open">
+    <div
+      v-show="open"
+      class="overlay"
+      :style="{ zIndex: z }"
+      @mousedown="onOverlayMouseDown"
+    >
       <div class="modal" role="dialog" aria-modal="true" @mousedown.stop>
-        <button class="close" type="button" aria-label="Close" @click="$emit('close')">
-          ×
-        </button>
+        <button class="close" type="button" aria-label="Close" @click="$emit('close')">×</button>
         <div class="content">
           <slot />
         </div>
@@ -14,12 +17,16 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted } from "vue";
+import { computed, onBeforeUnmount, onMounted } from "vue";
 
 const props = defineProps({
   open: { type: Boolean, default: false },
+  level: { type: Number, default: 1 },
 });
+
 const emit = defineEmits(["close"]);
+
+const z = computed(() => 9000 + props.level * 10);
 
 function onKeyDown(e) {
   if (!props.open) return;
@@ -27,7 +34,6 @@ function onKeyDown(e) {
 }
 
 function onOverlayMouseDown(e) {
-  // клик “вне окна”
   if (e.target.classList.contains("overlay")) emit("close");
 }
 
@@ -44,7 +50,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   align-items: center;
   justify-content: center;
   padding: 16px;
-  z-index: 9999;
 }
 
 .modal {
