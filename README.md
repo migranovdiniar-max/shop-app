@@ -67,7 +67,53 @@ shop-app/
 
 ### 1. Запуск базы данных (MariaDB)
 
-```bash
 cd docker
 docker compose up -d
 docker ps
+
+### 2. Запуск базы данных (MariaDB)
+
+cd backend
+
+# Установка зависимостей
+composer install
+
+# Создание .env и ключа
+cp .env.example .env
+php artisan key:generate
+
+# Проверка/настройка .env (должно совпадать с docker-compose)
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=shop
+# DB_USERNAME=shop
+# DB_PASSWORD=...
+
+# Миграции + тестовые данные
+php artisan migrate --seed
+
+# (или полная пересоздание базы)
+# php artisan migrate:fresh --seed
+
+# Запуск сервера
+php artisan serve --host=localhost --port=8000
+
+### 3. Запуск frontend (Vue)
+
+cd ../frontend
+
+npm install
+npm run dev
+
+### Полезные команды
+
+# Полная пересборка базы + сидеры
+cd backend
+php artisan migrate:fresh --seed
+
+# Сборка фронтенда для продакшена
+cd frontend
+npm run build
+
+# Предпросмотр сборки
+npm run preview
