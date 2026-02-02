@@ -75,27 +75,27 @@ docker ps
 
 cd backend
 
-# Установка зависимостей
+Установка зависимостей
 composer install
 
-# Создание .env и ключа
+Создание .env и ключа
 cp .env.example .env
 php artisan key:generate
 
-# Проверка/настройка .env (должно совпадать с docker-compose)
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=shop
-# DB_USERNAME=shop
-# DB_PASSWORD=...
+Проверка/настройка .env (должно совпадать с docker-compose)
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=shop
+DB_USERNAME=shop
+DB_PASSWORD=...
 
-# Миграции + тестовые данные
+Миграции + тестовые данные
 php artisan migrate --seed
 
-# (или полная пересоздание базы)
-# php artisan migrate:fresh --seed
+(или полная пересоздание базы)
+php artisan migrate:fresh --seed
 
-# Запуск сервера
+Запуск сервера
 php artisan serve --host=localhost --port=8000
 
 ### 3. Запуск frontend (Vue)
@@ -107,13 +107,13 @@ npm run dev
 
 ### Полезные команды
 
-# Полная пересборка базы + сидеры
+Полная пересборка базы + сидеры
 cd backend
 php artisan migrate:fresh --seed
 
-# Сборка фронтенда для продакшена
+Сборка фронтенда для продакшена
 cd frontend
 npm run build
 
-# Предпросмотр сборки
+Предпросмотр сборки
 npm run preview
